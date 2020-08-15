@@ -1,6 +1,10 @@
 import React, { Component } from "react";
+// import React, { PureComponent } from 'react';
 
 class Timer extends Component {
+  // class Timer extends PureComponent {
+  // AND ALSO - remove should component update method below - 
+  // it becomes unneccessary bc Pure componenet doesn't implement that method
   constructor() {
     super();
     this.timer = React.createRef();
@@ -17,6 +21,27 @@ class Timer extends Component {
       this.clockTick,
       this.props.updateInterval * 1000
     );
+    // console.log(this.timer.current);
+    // console.log(this.timer.current.style.background);
+  //   this.timer.current.style.color =
+  // "#" + Math.floor(Math.random() * 16777215).toString(16);
+  // ^^ changes font color randomly
+  }
+
+  componentDidUpdate() {
+    // console.log(this.timer.current);
+    // console.log(this.timer.current.style.background);
+    // console.log(this.timer.current.style.color);
+      this.timer.current.style.color =
+  "#" + Math.floor(Math.random() * 16777215).toString(16);
+  // ^^ changes font color randomly
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.time === nextState.time) {
+      return false
+    }
+    return true
   }
 
   componentWillUnmount() {
@@ -33,6 +58,7 @@ class Timer extends Component {
         <small onClick={this.handleClose}>X</small>
       </section>
     );
+    
   }
 
   clockTick = () => {
